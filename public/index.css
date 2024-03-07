@@ -1,0 +1,17 @@
+img {
+  width: 25px;
+  height: 25px;
+  -webkit-app-region: drag;
+}
+body {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}

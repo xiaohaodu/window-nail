@@ -1,0 +1,5 @@
+enable_testing()
+add_subdirectory(third_party/googletest-1.14.0)
+include_directories(third_party/googletest-1.14.0/googletest/include)
+add_subdirectory(third_party/LOG)
+include_directories(third_party/LOG)

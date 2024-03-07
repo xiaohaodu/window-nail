@@ -1,0 +1,42 @@
+{
+  "name": "window-nail",
+  "version": "1.0.0",
+  "description": "window-nail",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "wdio": "wdio run ./wdio.conf.js",
+    "nodebuild": "node-gyp configure && node-gyp build",
+    "rebuild": "electron-rebuild",
+    "postinstall": "electron-rebuild"
+  },
+  "keywords": [],
+  "author": "Du XiaoHao",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "@electron-forge/publisher-github": "^7.2.0",
+    "@electron/rebuild": "^3.4.1",
+    "@wdio/cli": "^8.27.0",
+    "@wdio/local-runner": "^8.27.0",
+    "@wdio/mocha-framework": "^8.27.0",
+    "@wdio/spec-reporter": "^8.27.0",
+    "bindings": "^1.5.0",
+    "electron": "^28.1.0",
+    "electron-devtools-installer": "^3.2.0",
+    "wdio-electron-service": "^6.0.2"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "node-addon-api": "^7.0.0",
+    "update-electron-app": "^3.0.0"
+  }
+}
