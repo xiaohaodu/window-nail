@@ -10,13 +10,8 @@ jobs:
     runs-on: windows-2022 # 或选择其他适合你项目的操作系统环境
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      ELECTRON_MIRROR: https://registry.npmmirror.com/-/binary/electron/
     steps:
-      - name: Clear Cache and Set Strict-ssl False
-        run: |
-          npm cache clean --force
-          npm config set strict-ssl false
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
