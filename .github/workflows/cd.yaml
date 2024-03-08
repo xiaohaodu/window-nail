@@ -13,14 +13,6 @@ jobs:
       ELECTRON_MIRROR: https://npm.taobao.org/mirrors/electron/
 
     steps:
-      - name: Clear Cache
-        run: |
-          npm cache clean --force
-
-      - name: Remove Node Modules
-        run: |
-          rmdir node_modules
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
