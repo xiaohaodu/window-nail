@@ -13,6 +13,11 @@ jobs:
       ELECTRON_MIRROR: https://npm.taobao.org/mirrors/electron/
 
     steps:
+      - name: Clear Cache and Set Strict-ssl False
+        run: |
+          npm cache clean --force
+          npm config set strict-ssl false
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -27,7 +32,7 @@ jobs:
           choco install visualstudio2019buildtools --package-parameters "--includeOptional --passive --norestart --installPath C:\BuildTools"
 
       - name: Install dependencies and rebuild native modules for Electron
-        run: npm i #使用npm ci代替npm install以获得更确定性构建（适用于CI环境）
+        run: npm ci #使用npm ci代替npm install以获得更确定性构建（适用于CI环境）
 
       - name: Build package with electron-forge
         run: npm run make #根据你的实际Electron Forge配置可能需要修改这条命令
