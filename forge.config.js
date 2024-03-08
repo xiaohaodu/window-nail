@@ -1,51 +1,44 @@
+const { FusesPlugin } = require('@electron-forge/plugin-fuses');
+const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+
 module.exports = {
   packagerConfig: {
     asar: true,
   },
-  alias: {},
   rebuildConfig: {},
-  // 添加 electronLaunchConfig 来自定义 Electron 启动参数
-  electronLaunchConfig: {
-    args: ["--inspect-brk=9800"],
-  },
   makers: [
     {
-      name: "@electron-forge/maker-squirrel",
-      config: {
-        certificateFile: "./cert.pfx",
-        certificatePassword: process.env.CERTIFICATE_PASSWORD,
-      },
-    },
-    {
-      name: "@electron-forge/maker-zip",
-      platforms: ["darwin"],
-    },
-    {
-      name: "@electron-forge/maker-deb",
+      name: '@electron-forge/maker-squirrel',
       config: {},
     },
     {
-      name: "@electron-forge/maker-rpm",
+      name: '@electron-forge/maker-zip',
+      platforms: ['darwin'],
+    },
+    {
+      name: '@electron-forge/maker-deb',
+      config: {},
+    },
+    {
+      name: '@electron-forge/maker-rpm',
       config: {},
     },
   ],
   plugins: [
     {
-      name: "@electron-forge/plugin-auto-unpack-natives",
+      name: '@electron-forge/plugin-auto-unpack-natives',
       config: {},
     },
-  ],
-  publishers: [
-    {
-      name: "@electron-forge/publisher-github",
-      config: {
-        repository: {
-          owner: "xiaohaodu",
-          name: "window-nail",
-        },
-        prerelease: false,
-        draft: true,
-      },
-    },
+    // Fuses are used to enable/disable various Electron functionality
+    // at package time, before code signing the application
+    new FusesPlugin({
+      version: FuseVersion.V1,
+      [FuseV1Options.RunAsNode]: false,
+      [FuseV1Options.EnableCookieEncryption]: true,
+      [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
+      [FuseV1Options.EnableNodeCliInspectArguments]: false,
+      [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
+      [FuseV1Options.OnlyLoadAppFromAsar]: true,
+    }),
   ],
 };
