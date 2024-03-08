@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-2022 # 或选择其他适合你项目的操作系统环境
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # ELECTRON_MIRROR: https://npm.taobao.org/mirrors/electron/
+      ELECTRON_MIRROR: https://npm.taobao.org/mirrors/electron/
 
     steps:
       - name: Checkout repository
