@@ -9,7 +9,7 @@ jobs:
   build-and-release:
     runs-on: windows-2022 # 或选择其他适合你项目的操作系统环境
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.REPO }}
       ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
     steps:
       - name: Checkout repository
