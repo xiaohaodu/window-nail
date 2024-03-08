@@ -44,15 +44,17 @@ jobs:
           draft: false
           prerelease: true
 
-      # 获取当前目录下最新版本号的.exe文件
+      # 获取当前目录下最新版本号的.exe文件并将其路径保存为输出变量
       - name: Find Latest Versioned Executable
+        id: latest_exe
         run: |
-          LATEST_EXE=$(ls -t ./out/make/window-nail-* Setup.exe | head -1)
-          echo "LATEST_EXE=$LATEST_EXE" >> $GITHUB_ENV
+          $LATEST_EXE = Get-ChildItem -Path "./out/make/window-nail-* Setup.exe" | Sort-Object LastWriteTime -Descending | Select-Object -ExpandProperty FullName -First 1
+          echo "::set-output name=exe_path::$($LATEST_EXE)"
 
       - name: Upload .exe as Release Asset
         uses: actions/upload-release-asset@v1
-
+        env:
+          LATEST_EXE_PATH: ${{ steps.latest_exe.outputs.exe_path }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # 获取创建Release时返回的上传URL
           asset_path: ${{ env.LATEST_EXE_PATH }} # 动态获取的实际.exe文件路径
