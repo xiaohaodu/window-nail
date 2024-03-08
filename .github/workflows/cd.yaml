@@ -58,5 +58,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # 获取创建Release时返回的上传URL
           asset_path: ${{ env.LATEST_EXE_PATH }} # 动态获取的实际.exe文件路径
-          asset_name: window-nail-${{ github.ref_name }}.exe
+          asset_name: window-nail-${{ steps.get_version.outputs.version }}.exe
           asset_content_type: application/vnd.microsoft.portable-executable # .exe文件的内容类型
