@@ -1,0 +1,62 @@
+name: Electron App Release Workflow
+
+on:
+  push:
+    branches:
+      - main # 替换为你的主分支名
+
+jobs:
+  build-and-release:
+    runs-on: windows-2022 # 或选择其他适合你项目的操作系统环境
+    env:
+      GITHUB_TOKEN: ${{ secrets.REPO }}
+      ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.18.1" # 使用与你的项目兼容的Node.js版本
+
+      - name: Install C++ Build Tools
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          choco install visualstudio2019buildtools --package-parameters "--includeOptional --passive --norestart --installPath C:\BuildTools"
+
+      - name: Install dependencies and rebuild native modules for Electron
+        run: npm ci #使用npm ci代替npm install以获得更确定性构建（适用于CI环境）
+
+      - name: Build package with electron-forge
+        run: npm run make #根据你的实际Electron Forge配置可能需要修改这条命令
+
+      - name: Get Package Version
+        id: get_version
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          release_name: Release v${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: true
+
+      # 获取当前目录下最新版本号的.exe文件并将其路径保存为输出变量
+      - name: Find Latest Versioned Executable
+        id: latest_exe
+        run: |
+          $LATEST_EXE = Get-ChildItem -Path "./out/make/squirrel.windows/x64/window-nail-* Setup.exe" | Sort-Object LastWriteTime -Descending | Select-Object -ExpandProperty FullName -First 1
+          echo "::set-output name=exe_path::$($LATEST_EXE)"
+
+      - name: Upload .exe as Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          LATEST_EXE_PATH: ${{ steps.latest_exe.outputs.exe_path }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # 获取创建Release时返回的上传URL
+          asset_path: ${{ env.LATEST_EXE_PATH }} # 动态获取的实际.exe文件路径
+          asset_name: window-nail-${{ steps.get_version.outputs.version }} Setup.exe
+          asset_content_type: application/vnd.microsoft.portable-executable # .exe文件的内容类型
