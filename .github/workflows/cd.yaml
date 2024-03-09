@@ -48,7 +48,7 @@ jobs:
       - name: Find Latest Versioned Executable
         id: latest_exe
         run: |
-          $LATEST_EXE = Get-ChildItem -Path "./out/make/window-nail-* Setup.exe" | Sort-Object LastWriteTime -Descending | Select-Object -ExpandProperty FullName -First 1
+          $LATEST_EXE = Get-ChildItem -Path "./out/make/squirrel.windows/x64/window-nail-* Setup.exe" | Sort-Object LastWriteTime -Descending | Select-Object -ExpandProperty FullName -First 1
           echo "::set-output name=exe_path::$($LATEST_EXE)"
 
       - name: Upload .exe as Release Asset
