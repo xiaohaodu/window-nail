@@ -118,21 +118,22 @@ static BOOL CALLBACK CheckWindow(HWND hwnd, LPARAM lParam)
     // 检查是否是系统窗口
     TCHAR className[256];
     GetClassName(hwnd, className, sizeof(className));
+
+    bool isSystemWindow = false;
     static const TCHAR *SYSTEM_WINDOW_CLASS_NAMES[] = {
         _T("Progman"),
         _T("Shell_TrayWnd"),              // 任务栏
         _T("WorkerW"),                    // 某些系统桌面窗口
         _T("Windows.UI.Core.CoreWindow"), // 名为 "Windows 输入体验"的隐藏窗口
         _T("ApplicationFrameWindow"),
-        _T("HwndWrapper"),
-        _T("HwndWrapper[LogiOverlay.exe;;5668f4ac-5123-4ce2-89eb-a712c317f33d]"),
-        _T("Windows.Internal.Shell.TabProxyWindow")
+        _T("Windows.Internal.Shell.TabProxyWindow"),
+        _T("Xaml_WindowedPopupClass"),
+        _T("HwndWrapper")
         // ... 添加其他系统窗口类名
     };
-    bool isSystemWindow = false;
     for (const auto &systemClassName : SYSTEM_WINDOW_CLASS_NAMES)
     {
-        if (_tcscmp(className, systemClassName) == 0)
+        if (_tcsncmp(className, systemClassName, _tcslen(systemClassName)) == 0)
         {
             isSystemWindow = true;
             break;
@@ -204,13 +205,14 @@ BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
         _T("WorkerW"),                    // 某些系统桌面窗口
         _T("Windows.UI.Core.CoreWindow"), // 名为 "Windows 输入体验"的隐藏窗口
         _T("ApplicationFrameWindow"),
-        _T("HwndWrapper[LogiOverlay.exe;;5668f4ac-5123-4ce2-89eb-a712c317f33d]"),
-        _T("Windows.Internal.Shell.TabProxyWindow")
+        _T("Windows.Internal.Shell.TabProxyWindow"),
+        _T("Xaml_WindowedPopupClass"),
+        _T("HwndWrapper")
         // ... 添加其他系统窗口类名
     };
     for (const auto &systemClassName : SYSTEM_WINDOW_CLASS_NAMES)
     {
-        if (_tcscmp(className, systemClassName) == 0)
+        if (_tcsncmp(className, systemClassName, _tcslen(systemClassName)) == 0)
         {
             isSystemWindow = true;
             break;
@@ -228,6 +230,7 @@ BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
             try
             {
                 windowInfos.push_back(WindowInfo(env, hwnd));
+                std::cout << "class " << className << " title " << WindowInfo::WideStringToUtf8(windowTitle) << " length " << windowInfos.size() << std::endl;
             }
             catch (const std::exception &e)
             {

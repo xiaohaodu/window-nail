@@ -1,6 +1,6 @@
 {
   "name": "window-nail",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "window-nail",
   "main": "src/main/main.js",
   "scripts": {
@@ -30,7 +30,6 @@
     "@wdio/local-runner": "^8.27.0",
     "@wdio/mocha-framework": "^8.27.0",
     "@wdio/spec-reporter": "^8.27.0",
-    "bindings": "^1.5.0",
     "electron": "28.1.0",
     "electron-devtools-installer": "^3.2.0"
   },
@@ -38,6 +37,22 @@
     "electron-squirrel-startup": "^1.0.0",
     "node-addon-api": "^7.0.0",
     "update-electron-app": "^3.0.0",
-    "wdio-electron-service": "^6.0.2"
+    "wdio-electron-service": "^6.0.2",
+    "bindings": "^1.5.0"
+  },
+  "forge": {
+    "makers": [
+      {
+        "name": "@electron-forge/maker-squirrel",
+        "config": {
+          "extraFiles": [
+            "build/Release/window_nail.node"
+          ]
+        }
+      },
+      {
+        "name": "@electron-forge/maker-zip"
+      }
+    ]
   }
 }

@@ -73,14 +73,17 @@ class Window {
   }
   getAllWindowsInfo() {
     const windows = top_windows.getAllWindowsInfo();
-    if (this.windows) {
+    const windowsTemp = this.windows;
+    this.windows = [];
+    if (windowsTemp) {
       for (const i in windows) {
         //窗口是否原本存在
         let flag = false;
-        for (const j in this.windows) {
-          if (this.windows[j].address === windows[i].address) {
+        for (const j in windowsTemp) {
+          if (windowsTemp[j].address === windows[i].address) {
             //窗口原本存在，停止查找
             flag = true;
+            this.windows.push({ ...windowsTemp[j] });
             break;
           }
         }
