@@ -35,7 +35,7 @@ class Window {
       alwaysOnTop: true, // 确保窗口总在最前面
       skipTaskbar: true, // 不在任务栏显示窗口图标
       titleBarStyle: "hidden", // 在 macOS 上隐藏标题栏
-      frame: process.platform === "darwin" ? false : undefined, // 在 macOS 上可能还需要 frame: false 来完全移除边框
+      frame: false, // 在 macOS 上可能还需要 frame: false 来完全移除边框
       webPreferences: {
         preload: path.join(__dirname, "../preload/preload.js"),
         devTools: false,
