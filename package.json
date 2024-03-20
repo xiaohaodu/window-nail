@@ -1,13 +1,15 @@
 {
   "name": "window-nail",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "window-nail",
   "main": "src/main/main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "publish-production": "npm run make && npm run publish",
+    "publish": "set NODE_ENV=production && set RELEASE_TYPE=release && electron-forge publish",
+    "publish-beta": "set NODE_ENV=development && set RELEASE_TYPE=prerelease && electron-forge publish",
     "wdio": "wdio run ./wdio.conf.js",
     "nodebuild": "node-gyp configure && node-gyp build",
     "rebuild": "electron-rebuild",
@@ -39,20 +41,5 @@
     "update-electron-app": "^3.0.0",
     "wdio-electron-service": "^6.0.2",
     "bindings": "^1.5.0"
-  },
-  "forge": {
-    "makers": [
-      {
-        "name": "@electron-forge/maker-squirrel",
-        "config": {
-          "extraFiles": [
-            "build/Release/window_nail.node"
-          ]
-        }
-      },
-      {
-        "name": "@electron-forge/maker-zip"
-      }
-    ]
   }
 }

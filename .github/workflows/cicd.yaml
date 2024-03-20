@@ -1,0 +1,39 @@
+name: Electron App Release Workflow
+
+on:
+  push:
+    branches:
+      - main # 替换为你的主分支名
+
+jobs:
+  build-and-publish:
+    runs-on: windows-2022 # 或选择其他适合你项目的操作系统环境
+    env:
+      GITHUB_TOKEN: ${{ secrets.REPO }}
+      ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.18.1" # 使用与你的项目兼容的Node.js版本
+
+      - name: Install C++ Build Tools (Windows Only)
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          choco install visualstudio2019buildtools --package-parameters "--includeOptional --passive --norestart --installPath C:\BuildTools"
+
+      - name: Install dependencies and rebuild native modules for Electron
+        run: npm ci
+
+      - name: Publish to GitHub Release using electron-forge
+        run: npm run publish-production # 这个命令将在本地运行electron-forge的发布流程，包括构建和发布到GitHub
+        env:
+          NODE_ENV: production
+          RELEASE_TYPE: release
+          FORGE_PUBLISH_TARGET: github
+
+      # 不再需要单独的创建GitHub Release和上传资产步骤，这些都将由@electron-forge/publisher-github插件处理

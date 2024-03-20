@@ -14,14 +14,14 @@ class WindowNailTray {
 
       // 设置托盘图标的工具提示
       this.tray.setToolTip("windows-nail");
-      // this.tray.on("click", () => {
-      //   if (this.window.win.isVisible()) {
-      //     this.window.win.close();
-      //     this.window.win.hide();
-      //   } else {
-      //     this.window.win.show();
-      //   }
-      // });
+      this.tray.on("click", () => {
+        if (this.window.win.isVisible()) {
+          this.window.win.close();
+          this.window.win.hide();
+        } else {
+          this.window.win.show();
+        }
+      });
     });
 
     // 为托盘设置右键菜单

@@ -38,7 +38,7 @@ class Window {
       frame: process.platform === "darwin" ? false : undefined, // 在 macOS 上可能还需要 frame: false 来完全移除边框
       webPreferences: {
         preload: path.join(__dirname, "../preload/preload.js"),
-        devTools: true,
+        devTools: false,
       },
     });
     // // 可选地，对于 Windows 平台，可以设置特殊的层级 'screen-saver'

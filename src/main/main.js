@@ -5,5 +5,4 @@ require("./ipc.js");
 const window = new Window();
 app.whenReady().then(() => {
   const tray = new WindowNailTray(window);
-  // window.openDevTool();
 });
