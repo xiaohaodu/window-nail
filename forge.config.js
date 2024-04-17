@@ -39,6 +39,7 @@ module.exports = {
       prerelease: process.env.NODE_ENV === "development",
       releaseType: process.env.RELEASE_TYPE,
       token: process.env.GITHUB_TOKEN,
+      draft: process.env.NODE_ENV === "development",
     }),
   ],
   plugins: [
