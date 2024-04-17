@@ -9,24 +9,16 @@ const { PublisherGithub } = require("@electron-forge/publisher-github");
 module.exports = {
   packagerConfig: {
     asar: true,
+    arch: "darwin",
+    name: "window-nail",
+    executableName: "window-nail",
+    icon: "public/nail-white",
+    extraResource: ["build/Release/window_nail.node"],
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({
-      name: "window-nail",
-      shortCutName: "window-nail",
-      executableName: "window-nail",
-      shortcuts: [
-        {
-          name: "window-nail",
-          target: "window-nail.exe",
-          iconPath: "public/nail-black.png", // 替换为实际图标的路径
-          workingDirectory: "$INSTDIR",
-        },
-      ],
-      extraFiles: ["build/Release/window_nail.node"],
-    }),
-    new MakerZIP({ platforms: ["darwin"] }),
+    new MakerSquirrel({}),
+    new MakerZIP({}),
     new MakerDeb({}),
     new MakerRpm({}),
   ],
