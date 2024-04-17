@@ -230,7 +230,7 @@ BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
             try
             {
                 windowInfos.push_back(WindowInfo(env, hwnd));
-                std::cout << "class " << className << " title " << WindowInfo::WideStringToUtf8(windowTitle) << " length " << windowInfos.size() << std::endl;
+                // std::cout << "class " << className << " title " << WindowInfo::WideStringToUtf8(windowTitle) << " length " << windowInfos.size() << std::endl;
             }
             catch (const std::exception &e)
             {

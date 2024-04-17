@@ -29,17 +29,27 @@ class Window {
   }
   createWindow() {
     this.win = new BrowserWindow({
-      height: 50,
-      width: 50,
+      height: 25,
+      width: 25,
       transparent: true, // 设置窗口为透明
       alwaysOnTop: true, // 确保窗口总在最前面
-      skipTaskbar: true, // 不在任务栏显示窗口图标
+      skipTaskbar: false,
+      focusable: false,
       titleBarStyle: "hidden", // 在 macOS 上隐藏标题栏
-      frame: false, // 在 macOS 上可能还需要 frame: false 来完全移除边框
+      frame: false,
       webPreferences: {
         preload: path.join(__dirname, "../preload/preload.js"),
-        devTools: false,
+        devTools: true,
+        backgroundThrottling: false,
       },
+      title: "",
+      // backgroundColor: "#438A49",
+      resizable: false,
+      useContentSize: false,
+      hasShadow: false,
+      visualEffectState: "active",
+      backgroundMaterial: "none",
+      titleBarOverlay: false,
     });
     // // 可选地，对于 Windows 平台，可以设置特殊的层级 'screen-saver'
     if (process.platform === "win32") {
