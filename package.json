@@ -1,19 +1,19 @@
 {
   "name": "window-nail",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "window-nail",
   "main": "src/main/main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish-production": "npm run nodebuild && npm run make && npm run publish",
+    "publish-production": "npm run nodebuild && npm run publish",
     "publish": "set NODE_ENV=production && set RELEASE_TYPE=release && electron-forge publish",
     "publish-beta": "set NODE_ENV=development && set RELEASE_TYPE=prerelease && electron-forge publish",
     "wdio": "wdio run ./wdio.conf.js",
     "nodebuild": "node-gyp configure && node-gyp build && electron-rebuild",
     "rebuild": "electron-rebuild",
-    "postinstall": "electron-rebuild"
+    "postinstall": "npm run nodebuild"
   },
   "keywords": [],
   "author": "Du-XiaoHao",
