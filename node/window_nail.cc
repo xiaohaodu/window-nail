@@ -149,7 +149,7 @@ static BOOL CALLBACK CheckWindow(HWND hwnd, LPARAM lParam)
     {
         // 检查窗口是否有标题（可选，根据具体需求）
         std::wstring windowTitle = GetWindowTitle(hwnd);
-        if (!windowTitle.empty() && WindowInfo::WideStringToUtf8(windowTitle) != "画中画")
+        if (!windowTitle.empty())
         {
             *foregroundHwnd = hwnd;
             return FALSE; // 找到匹配的窗口，停止枚举
@@ -225,7 +225,7 @@ BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
     if (!isSystemWindow && GetWindowPlacement(hwnd, &wp) && wp.showCmd != SW_MINIMIZE && (GetWindowLong(hwnd, GWL_STYLE) & WS_VISIBLE) != 0 && IsWindowVisible(hwnd))
     {
         std::wstring windowTitle = GetWindowTitle(hwnd);
-        if (!windowTitle.empty() && WindowInfo::WideStringToUtf8(windowTitle) != "画中画")
+        if (!windowTitle.empty())
         {
             try
             {

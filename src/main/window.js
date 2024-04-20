@@ -9,22 +9,9 @@ class Window {
   moveTimeout = null;
   constructor() {
     app.whenReady().then(() => {
-      ipcMain.handle("ping", () => "pong");
-      // this.createWindow();
-
-      app.on("activate", () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-          ipcMain.handle("ping", () => "pong");
-          // createWindow();
-        }
-      });
+      this.createWindow();
     });
 
-    app.on("window-all-closed", () => {
-      if (process.platform !== "darwin") {
-        app.quit();
-      }
-    });
     this.getAllWindowsInfo();
   }
   createWindow() {
@@ -58,27 +45,10 @@ class Window {
 
     this.win.loadFile("public/index.html");
 
-    // // 监听窗口移动开始事件
-    // this.win.on("move", (event) => {
-    //   // 清除上一次可能还未执行的延迟任务
-    //   clearTimeout(this.moveTimeout);
-
-    //   // 设置一个新的延时任务，在窗口位置稳定一段时间（比如500毫秒）后触发
-    //   this.moveTimeout = setTimeout(() => {
-    //     // console.log("Window has been moved and is now stable.");
-    //     // 在这里添加窗口移动完成后的处理代码
-    //     // console.log("Window is being moved...");
-    //     // 在这里可以获取到窗口当前的位置
-    //     const position = this.win.getPosition();
-    //     // console.log("New window position:", position);
-    //     this.setWindowsNail(position[0], position[1]);
-    //   }, 500);
-    // });
-
     // 当窗口关闭时，清除可能存在的延时任务以避免内存泄漏
     this.win.on("closed", () => {
       this.close();
-      clearTimeout(this.moveTimeout);
+      this.moveTimeout && clearTimeout(this.moveTimeout);
     });
   }
   getAllWindowsInfo() {
@@ -148,7 +118,7 @@ class Window {
       this.top_window = null;
     } else {
       for (const i in this.windows) {
-        if (this.windows[i].top == true) {
+        if (this.windows[i].top) {
           top_windows.switchWindowTopmostByHWND(this.windows[i].address, false);
         }
       }

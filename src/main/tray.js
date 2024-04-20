@@ -15,33 +15,18 @@ class WindowNailTray {
       // 设置托盘图标的工具提示
       this.tray.setToolTip("windows-nail");
       this.tray.on("click", () => {
-        if (this.window.win.isVisible()) {
-          this.window.win.close();
-          this.window.win.hide();
-        } else {
-          this.window.win.show();
+        if (this.window.win) {
+          if (this.window.win.isVisible()) {
+            this.window.win.hide();
+          } else {
+            this.window.win.show();
+          }
         }
       });
     });
 
     // 为托盘设置右键菜单
     this.updateContextMenu();
-
-    // 当所有窗口都被关闭时，退出应用
-    app.on("window-all-closed", () => {
-      // 在 macOS 上，用户通常会在应用菜单栏之外的地方关闭应用
-      // 所以除非用户明确地按下Quit，否则应用会保持活动状态
-      if (process.platform !== "darwin") {
-        this.destroy();
-        this.window.close();
-        app.quit();
-      }
-    });
-
-    app.on("activate", () => {
-      // 在 macOS 上，当点击 dock 图标并且没有其他窗口打开时，
-      // 通常会重新创建一个窗口。
-    });
   }
   updateContextMenu() {
     this.windowUpdateTimeout = setInterval(() => {
