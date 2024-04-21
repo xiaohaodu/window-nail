@@ -16,10 +16,10 @@ class WindowNailTray {
       this.tray.setToolTip("windows-nail");
       this.tray.on("click", () => {
         if (this.window.win) {
-          if (this.window.win.isVisible()) {
-            this.window.win.hide();
+          if (this.window.win.isMinimized()) {
+            this.window.win.restore();
           } else {
-            this.window.win.show();
+            this.window.win.minimize();
           }
         }
       });
