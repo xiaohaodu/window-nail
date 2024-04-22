@@ -73,5 +73,6 @@
     "xlocmon": "cpp",
     "xloctime": "cpp"
   },
-  "cmake.sourceDirectory": "D:/PROJECT/window-nail/node"
+  "cmake.sourceDirectory": "D:/PROJECT/window-nail/node",
+  "commentTranslate.hover.enabled": true
 }
